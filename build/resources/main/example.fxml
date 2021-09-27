@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import model.ReservationStatus?>
+<TabPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ctrl.Controller">
+ <tabs>
+    <!-- Manage Cars /-->
+    <Tab text = "Cars">
+        <content>
+            <HBox>
+                <GridPane alignment="CENTER_RIGHT" hgap="10.0" vgap="10.0">
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+
+                    <Text fill = "indianred" text = "Fill in car details... " textAlignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+
+                    <Label text = "Manufacturer: "  GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <TextField fx:id = "manufacturer" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                    <Label text = "Model: " GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <TextField fx:id = "model" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                    <Label text = "Engine: " GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <TextField fx:id = "engine" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                    <Label text = "Price: " GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                    <TextField fx:id = "price" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                    <Label text = "Color" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                    <TextField fx:id = "color" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                    <HBox alignment="BOTTOM_RIGHT" GridPane.columnIndex="0"  GridPane.columnSpan="2"  GridPane.rowIndex="6">
+                        <children>
+
+                            <Button fx:id = "updateCarButton" onAction="#updateCar" text = "Update">
+                                <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                </HBox.margin>
+                            </Button>
+
+                            <Button fx:id = "deleteCarButton" onAction="#deleteCar" text = "Delete">
+                                <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                </HBox.margin>
+                            </Button>
+
+                            <Button fx:id = "addCarButton" onAction="#addCarToList" text = "Add car">
+                                <HBox.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                </HBox.margin>
+                            </Button>
+
+                            <Button text = "Clear" onAction="#clearCarFields"/>
+                        </children>
+                    </HBox>
+                    <Text fx:id="car_id" fill="royalblue" text="" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+                </GridPane>
+
+            <GridPane alignment="CENTER_LEFT" hgap = "10.0" vgap="10.0">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+
+
+                <HBox alignment="TOP_RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                    <children>
+                        <TextField fx:id="selectedPrice"></TextField>
+                        <Button fx:id="filterByPrice" onAction="#filterCarsByPrice" text="Filter by price"></Button>
+
+                        <ChoiceBox fx:id="manufacturerChoice">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value = "Audi" />
+                                    <String fx:value = "BMW"/>
+                                    <String fx:value = "Mercedes"/>
+                                    <String fx:value="Ford"/>
+                                    <String fx:value="Volkswagen"/>
+                                    <String fx:value="Renault"/>
+                                    <String fx:value="Opel"/>
+                                    <String fx:value="Range Rover"/>
+                                    <String fx:value="Nissan"/>
+                                    <String fx:value="Mazda"/>
+                                    <String fx:value="Honda"/>
+                                    <String fx:value="Toyota"/>
+                                </FXCollections>
+                            </items>
+                        </ChoiceBox>
+                        <Button fx:id="filterByManufacturer" onAction="#filterCarsByManufacturer" text="Filter by manufacturer"></Button>
+                    </children>
+                </HBox>
+
+                <HBox alignment="BOTTOM_RIGHT" GridPane.columnSpan="2" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <children>
+                        <Button fx:id="reset" onAction="#resetCarList" text = "Reset"/>
+                    </children>
+                </HBox>
+
+                <TableView fx:id = "viewCars" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                    <columns>
+                        <TableColumn text = "Car ID">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="iD"/>
+                            </cellValueFactory>
+                        </TableColumn>
+
+                        <TableColumn text = "Manufacturer">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="manufacturer"/>
+                            </cellValueFactory>
+                        </TableColumn>
+
+                        <TableColumn text = "Model">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="model"/>
+                            </cellValueFactory>
+                        </TableColumn>
+
+                        <TableColumn text = "Engine">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="engine"/>
+                            </cellValueFactory>
+                        </TableColumn>
+
+                        <TableColumn text = "Price(€)">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="price"/>
+                            </cellValueFactory>
+                        </TableColumn>
+
+                        <TableColumn text = "Color">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="color"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </GridPane>
+            </HBox>
+        </content>
+    </Tab>
+
+     <!-- Manage reservations -->
+     <Tab text = "Reservations">
+         <content>
+             <HBox>
+                 <GridPane alignment="CENTER_RIGHT" hgap="10.0" vgap="10.0">
+                     <padding>
+                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+
+                     <Text fill = "indianred" text = "Fill in car details... " textAlignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+
+                     <Label text = "Car ID: "  GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                     <TextField fx:id = "wanted_car_id" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                     <Label text = "Client name: " GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                     <TextField fx:id = "client_name" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                     <Label text = "Start date: " GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                     <DatePicker fx:id = "start_date" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                     <Label text = "Number of days: " GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                     <TextField fx:id = "nr_days" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                     <HBox alignment="BOTTOM_RIGHT" GridPane.columnIndex="0"  GridPane.columnSpan="2"  GridPane.rowIndex="6">
+                         <children>
+
+                             <Button fx:id = "addReservationButton" onAction="#addReservationToList" text = "Add">
+                                 <HBox.margin>
+                                     <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                             </Button>
+
+                             <!--Button fx:id = "deleteReservationButton" onAction="#deleteReservation" text = "Delete">
+                                 <HBox.margin>
+                                     <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                             </Button> <!-->
+
+
+                             <Button fx:id = "updateReservationButton" onAction="#updateReservation" text = "Update">
+                                 <HBox.margin>
+                                     <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                             </Button>
+
+                             <Button text = "Clear" onAction="#clearCarFields"/>
+                         </children>
+                     </HBox >
+
+                     <HBox alignment="BOTTOM_RIGHT" GridPane.columnIndex="0"  GridPane.columnSpan="2"  GridPane.rowIndex="7">
+                         <children>
+                             <Button fx:id = "completeReservation" onAction="#completeReservation" text = "Completed" >
+                                 <HBox.margin>
+                                     <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                             </Button>
+
+                             <Button fx:id = "cancelReservation" onAction="#cancelReservation" text = "Cancel" >
+                                 <HBox.margin>
+                                     <Insets left="10.0" right="10.0" />
+                                 </HBox.margin>
+                             </Button>
+
+                         </children>
+                     </HBox>
+                     <Text fx:id="reservation_id" fill="royalblue" text="" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+                 </GridPane>
+
+                 <GridPane alignment="CENTER_LEFT" hgap = "10.0" vgap="10.0">
+                     <padding>
+                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+
+                     <HBox alignment="TOP_RIGHT" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.columnSpan="2">
+                         <children>
+                             <ChoiceBox fx:id="statusChoice" value="Status">
+                                 <items>
+                                     <FXCollections fx:factory="observableArrayList">
+                                         <ReservationStatus fx:value = "Active" />
+                                         <ReservationStatus fx:value = "Completed"/>
+                                         <ReservationStatus fx:value = "Cancelled"/>
+                                     </FXCollections>
+                                 </items>
+                             </ChoiceBox>
+
+                             <Button fx:id = "filterByStatus" onAction="#filterByStatus" text = "Filter by status"></Button>
+
+                             <DatePicker fx:id = "datePicker">
+                             </DatePicker>
+                             <Button fx:id = "filterByDate" onAction="#filterByDate" text = "Filter by date"></Button>
+                         </children>
+                     </HBox>
+
+
+
+                     <HBox alignment="BOTTOM_RIGHT" GridPane.columnSpan="2" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                         <children>
+                             <Button fx:id="resetReservations" onAction="#resetReservationsList" text = "Reset"/>
+                         </children>
+                     </HBox>
+
+                     <TableView fx:id = "viewReservations" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                         <columns>
+                             <TableColumn text = "Reservation ID">
+                                 <cellValueFactory>
+                                     <PropertyValueFactory property="iD"/>
+                                 </cellValueFactory>
+                             </TableColumn>
+
+                             <TableColumn text = "Car ID">
+                                 <cellValueFactory>
+                                     <PropertyValueFactory property="wanted_car"/>
+                                 </cellValueFactory>
+                             </TableColumn>
+
+                             <TableColumn text = "Client">
+                                 <cellValueFactory>
+                                     <PropertyValueFactory property="client_name"/>
+                                 </cellValueFactory>
+                             </TableColumn>
+
+                             <TableColumn text = "Start date">
+                                 <cellValueFactory>
+                                     <PropertyValueFactory property="start_date"/>
+                                 </cellValueFactory>
+                             </TableColumn>
+
+                             <TableColumn text = "Number of days">
+                                 <cellValueFactory>
+                                     <PropertyValueFactory property="nr_days"/>
+                                 </cellValueFactory>
+                             </TableColumn>
+
+                             <TableColumn text = "Status">
+                                 <cellValueFactory>
+                                     <PropertyValueFactory property="status"/>
+                                 </cellValueFactory>
+                             </TableColumn>
+                         </columns>
+                         <columnResizePolicy>
+                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                         </columnResizePolicy>
+                     </TableView>
+                 </GridPane>
+             </HBox>
+         </content>
+     </Tab>
+
+ </tabs>
+</TabPane>

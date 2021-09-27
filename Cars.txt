@@ -1,0 +1,8 @@
+10
+1;Mercedes;C-Class;2.2;24;grey
+3;Audi;A8;2.4;27;red
+4;Renault;Clio;1.2;10;grey
+5;Ford;Focus;1.6;10;red
+6;Ford;Focus;1.8;12;blue
+8;BMW;x1;2.2;12;red
+9;Skoda;Superb;2.0;13;grey
